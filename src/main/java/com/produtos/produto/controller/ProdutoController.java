@@ -15,4 +15,23 @@ public class ProdutoController {
     @Autowired
     private ProdutoRepository repository;
 
+    @GetMapping("/")
+    private String listarProdutos(Model model) {
+        model.addAttribute("produtos", repository.findAll());
+        return "lista";
+    }
+
+    @GetMapping("/cadastro")
+    private String mostrarFormulario(Model model) {
+        model.addAttribute("produto", new Produto());
+        return "cadastro";
+    }
+
+    @PostMapping("/cadastro")
+    private String cadastrar(Produto produto) {
+        repository.save(produto);
+        return "redirect:/";
+
+    }
+
 }
